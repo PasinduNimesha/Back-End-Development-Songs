@@ -51,3 +51,24 @@ def parse_json(data):
 ######################################################################
 # INSERT CODE HERE
 ######################################################################
+@app.route("/health")
+def health():
+    return jsonify(dict(status="OK")), 200
+
+@app.route("/count")
+def count():
+    return jsonify(dict(count=len(songs_list))), 200
+
+@app.route("/song")
+def songs():
+    lst = list(db.songs.find({}))
+    print(lst)
+    return {"songs": parse_json(lst)}, 200
+
+@app.route("/song/<int:id>")
+def get_song_by_id(id):
+    song = db.songs.find_one({"id": id})
+    if song:
+        return parse_json(song), 200
+    else:
+        return jsonify( {"message": "song with id not found"})
