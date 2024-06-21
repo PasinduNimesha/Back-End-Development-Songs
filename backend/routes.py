@@ -57,7 +57,7 @@ def health():
 
 @app.route("/count")
 def count():
-    return jsonify(dict(count=len(songs_list))), 200
+    return jsonify(dict(count=db.songs.count_documents({}))), 200
 
 @app.route("/song")
 def songs():
